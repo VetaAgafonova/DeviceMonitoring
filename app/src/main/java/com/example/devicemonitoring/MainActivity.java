@@ -10,15 +10,14 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-
-
-
+import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
     Button buttonExit, buttonConnect;
     EditText etName, etHost, etPort, etPassword;
     CheckBox cbRemember;
-
+    String cbName, cbHost, cbPort, cbPassword;
+    private Connection  mConnect  = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +32,12 @@ public class MainActivity extends AppCompatActivity {
         cbRemember = findViewById(R.id.checkBox);
 
         SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-        String cbName = preferences.getString("name","");
-        String cbHost = preferences.getString("host","");
-        String cbPort = preferences.getString("port","");
-        String cbPassword = preferences.getString("password","");
+        cbName = preferences.getString("name","");
+        cbHost = preferences.getString("host","");
+        cbPort = preferences.getString("port","");
+        cbPassword = preferences.getString("password","");
+
+
 
         etName.setText(cbName);
         etHost.setText(cbHost);
@@ -60,8 +61,9 @@ public class MainActivity extends AppCompatActivity {
         buttonConnect.setOnClickListener(new View.OnClickListener() {
             //Вход не сделан
             public void onClick(View arg0) {
-
                 Intent intent = new Intent(MainActivity.this, DeviceActivity.class);
+                intent.putExtra("cbHost", cbHost);
+                intent.putExtra("cbPort", cbPort);
                 startActivity(intent);
             }
         });
@@ -76,5 +78,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
 }
 

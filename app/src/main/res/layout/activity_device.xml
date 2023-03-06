@@ -6,4 +6,49 @@
     android:layout_height="match_parent"
     tools:context=".DeviceActivity">
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="138dp"
+        android:layout_marginTop="644dp"
+        android:layout_marginEnd="179dp"
+        android:onClick="onSendClick"
+        android:text="Button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText11" />
+
+    <EditText
+        android:id="@+id/editText11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        tools:layout_editor_absoluteX="-1dp"
+        tools:layout_editor_absoluteY="-3dp" />
+
+    <Button
+        android:id="@+id/btnExitConnection"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="Exit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/indicator"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="10dp"
+        android:background="@color/red"
+        android:text=" "
+        app:layout_constraintEnd_toStartOf="@+id/btnExitConnection"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
