@@ -2,10 +2,11 @@ package com.example.devicemonitoring;
 
 import android.util.Log;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.Socket;
-import java.io.Serializable;
 
 public class Connection implements Serializable
 {
@@ -71,6 +72,7 @@ public class Connection implements Serializable
                     + e.getMessage());
         }
     }
+
     @Override
     protected void finalize() throws Throwable
     {

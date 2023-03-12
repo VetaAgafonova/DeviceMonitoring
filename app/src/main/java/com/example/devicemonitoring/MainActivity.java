@@ -62,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
             //Вход не сделан
             public void onClick(View arg0) {
                 Intent intent = new Intent(MainActivity.this, DeviceActivity.class);
-                intent.putExtra("cbHost", cbHost);
-                intent.putExtra("cbPort", cbPort);
+                intent.putExtra("cbHost", etHost.getText().toString());
+                intent.putExtra("cbPort", etPort.getText().toString());
                 startActivity(intent);
             }
         });
