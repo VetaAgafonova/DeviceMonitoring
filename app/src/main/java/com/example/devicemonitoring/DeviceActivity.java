@@ -97,30 +97,31 @@ public class DeviceActivity extends AppCompatActivity{
             cbHost = arguments.get("cbHost").toString();
             cbPort = arguments.get("cbPort").toString();
         }
-        mConnect = new Connection(cbHost ,Integer.parseInt(cbPort));
-        // Открытие сокета в отдельном потоке
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    mConnect.openConnection();
-                    indicator.setBackgroundColor(backgroundColor);
-                    Log.d(Connection.LOG_TAG, "Соединение установлено");
-                    Log.d(Connection.LOG_TAG, "(mConnect != null) = "
-                            + (mConnect != null));
-                } catch (Exception e) {
-                    Log.e(Connection.LOG_TAG, e.getMessage());
-                    mConnect = null;
+            mConnect = new Connection(cbHost, Integer.parseInt(cbPort));
+            // Открытие сокета в отдельном потоке
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        mConnect.openConnection();
+                        mConnect.run();
+                        indicator.setBackgroundColor(backgroundColor);
+                        Log.d(Connection.LOG_TAG, "Соединение установлено");
+
+                    } catch (Exception e) {
+                        Log.e(Connection.LOG_TAG, e.getMessage());
+                        mConnect = null;
+                    }
                 }
-            }
-        }).start();
+            }).start();
+
 
         tb0.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
         {
             @Override
             public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked)
             {
-                if(isChecked) onSendClick("0","1"); else onSendClick("0","0");
+                if(isChecked) onSendClick("DO0","1"); else onSendClick("DO0","0");
             }
         });
         tb1.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
@@ -128,7 +129,7 @@ public class DeviceActivity extends AppCompatActivity{
             @Override
             public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked)
             {
-                if(isChecked) onSendClick("1","1"); else onSendClick("1","0");
+                if(isChecked) onSendClick("DO1","1"); else onSendClick("DO1","0");
             }
         });
         tb2.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
@@ -136,7 +137,7 @@ public class DeviceActivity extends AppCompatActivity{
             @Override
             public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked)
             {
-                if(isChecked) onSendClick("2","1"); else onSendClick("2","0");
+                if(isChecked) onSendClick("DO2","1"); else onSendClick("DO2","0");
             }
         });
         tb3.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
@@ -144,7 +145,7 @@ public class DeviceActivity extends AppCompatActivity{
             @Override
             public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked)
             {
-                if(isChecked) onSendClick("3","1"); else onSendClick("3","0");
+                if(isChecked) onSendClick("DO3","1"); else onSendClick("DO3","0");
             }
         });
         tb4.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
@@ -152,7 +153,7 @@ public class DeviceActivity extends AppCompatActivity{
             @Override
             public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked)
             {
-                if(isChecked) onSendClick("4","1"); else onSendClick("4","0");
+                if(isChecked) onSendClick("DO4","1"); else onSendClick("DO4","0");
             }
         });
         tb5.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
@@ -160,7 +161,7 @@ public class DeviceActivity extends AppCompatActivity{
             @Override
             public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked)
             {
-                if(isChecked) onSendClick("5","1"); else onSendClick("5","0");
+                if(isChecked) onSendClick("DO5","1"); else onSendClick("DO5","0");
             }
         });
         tb6.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
@@ -168,7 +169,7 @@ public class DeviceActivity extends AppCompatActivity{
             @Override
             public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked)
             {
-                if(isChecked) onSendClick("6","1"); else onSendClick("6","0");
+                if(isChecked) onSendClick("DO6","1"); else onSendClick("DO6","0");
             }
         });
         tb7.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
@@ -176,7 +177,7 @@ public class DeviceActivity extends AppCompatActivity{
             @Override
             public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked)
             {
-                if(isChecked) onSendClick("7","1"); else onSendClick("7","0");
+                if(isChecked) onSendClick("DO7","1"); else onSendClick("DO7","0");
             }
         });
         tb8.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
@@ -184,7 +185,7 @@ public class DeviceActivity extends AppCompatActivity{
             @Override
             public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked)
             {
-                if(isChecked) onSendClick("8","1"); else onSendClick("8","0");
+                if(isChecked) onSendClick("DO8","1"); else onSendClick("DO8","0");
             }
         });
         tb9.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
@@ -192,7 +193,7 @@ public class DeviceActivity extends AppCompatActivity{
             @Override
             public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked)
             {
-                if(isChecked) onSendClick("9","1"); else onSendClick("9","0");
+                if(isChecked) onSendClick("DO9","1"); else onSendClick("DO9","0");
             }
         });
         tb10.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
@@ -200,7 +201,7 @@ public class DeviceActivity extends AppCompatActivity{
             @Override
             public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked)
             {
-                if(isChecked) onSendClick("10","1"); else onSendClick("10","0");
+                if(isChecked) onSendClick("DO10","1"); else onSendClick("DO10","0");
             }
         });
         tb11.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
@@ -208,7 +209,7 @@ public class DeviceActivity extends AppCompatActivity{
             @Override
             public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked)
             {
-                if(isChecked) onSendClick("11","1"); else onSendClick("11","0");
+                if(isChecked) onSendClick("DO11","1"); else onSendClick("DO11","0");
             }
         });
         tb12.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
@@ -216,7 +217,7 @@ public class DeviceActivity extends AppCompatActivity{
             @Override
             public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked)
             {
-                if(isChecked) onSendClick("12","1"); else onSendClick("12","0");
+                if(isChecked) onSendClick("DO12","1"); else onSendClick("DO12","0");
             }
         });
         tb13.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
@@ -224,7 +225,7 @@ public class DeviceActivity extends AppCompatActivity{
             @Override
             public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked)
             {
-                if(isChecked) onSendClick("13","1"); else onSendClick("13","0");
+                if(isChecked) onSendClick("DO13","1"); else onSendClick("DO13","0");
             }
         });
         tb14.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
@@ -232,7 +233,7 @@ public class DeviceActivity extends AppCompatActivity{
             @Override
             public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked)
             {
-                if(isChecked) onSendClick("14","1"); else onSendClick("14","0");
+                if(isChecked) onSendClick("DO14","1"); else onSendClick("DO14","0");
             }
         });
         tb15.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
@@ -240,7 +241,7 @@ public class DeviceActivity extends AppCompatActivity{
             @Override
             public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked)
             {
-                if(isChecked) onSendClick("15","1"); else onSendClick("15","0");
+                if(isChecked) onSendClick("DO15","1"); else onSendClick("DO15","0");
             }
         });
 
@@ -249,6 +250,7 @@ public class DeviceActivity extends AppCompatActivity{
                 onCloseClick();
             }
         });
+
     }
 
     private void onCloseClick()

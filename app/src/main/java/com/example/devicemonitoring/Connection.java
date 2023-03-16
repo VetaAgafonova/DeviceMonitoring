@@ -2,17 +2,20 @@ package com.example.devicemonitoring;
 
 import android.util.Log;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.net.Socket;
 
-public class Connection implements Serializable
+public class Connection implements Runnable
 {
     private transient  Socket  mSocket = null;
     private  String  mHost   = null;
     private  int     mPort   = 0;
+    private InputStream inputStream = null;
 
     public static final String LOG_TAG = "SOCKET";
 
@@ -78,5 +81,45 @@ public class Connection implements Serializable
     {
         super.finalize();
         closeConnection();
+    }
+
+    @Override
+    public void run() {
+        try {
+            // Определение входного потока
+            inputStream = mSocket.getInputStream();
+        } catch (IOException e) {
+            System.err.println("Can't get input stream");
+        }
+        // Буфер для чтения информации
+        byte[] data = new byte[1024*4];
+        while(true) {
+            try {
+                /*
+                 * Получение информации :
+                 *    count - количество полученных байт
+                 */
+                int count;
+                count = inputStream.read(data,0,data.length);
+
+                if (count > 0) {
+                    String msg = new String(data, 0, count);
+                    JSONObject js = new JSONObject(msg);
+                    // Вывод в консоль сообщения
+                    System.out.println(js+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                    //System.out.println(msg);
+                } else if (count == -1 ) {
+                    // Если count=-1, то поток прерван
+                    System.out.println("1socket is closed");
+                    mSocket.close();
+                    break;
+                }
+            } catch (IOException e) {
+                System.err.println(e.getMessage());
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        System.out.println("1ConnectionWorker stoped");
     }
 }
