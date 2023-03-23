@@ -1,13 +1,20 @@
 package com.example.devicemonitoring;
-
+import android.app.Activity;
+import android.content.Intent;
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
+import android.widget.ToggleButton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
 import java.net.Socket;
 
 public class Connection implements Runnable
@@ -18,17 +25,25 @@ public class Connection implements Runnable
     private InputStream inputStream = null;
 
     public static final String LOG_TAG = "SOCKET";
+    Context mContext = null;
+    private MyCustomInterface i = null;
+
+
 
     public Connection() {}
+    public Connection (MyCustomInterface i){
+        this.i = i;
+    }
 
-    public Connection (final String host, final int port)
+    public Connection (final String host, final int port, Context context, MyCustomInterface a)
     {
         this.mHost = host;
         this.mPort = port;
+        this.mContext = context;
+        this.i = a;
+
+
     }
-
-
-
 
     // Метод открытия сокета
     public void openConnection() throws Exception
@@ -105,9 +120,8 @@ public class Connection implements Runnable
                 if (count > 0) {
                     String msg = new String(data, 0, count);
                     JSONObject js = new JSONObject(msg);
-                    // Вывод в консоль сообщения
-                    System.out.println(js+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                    //System.out.println(msg);
+                    System.out.println(msg);
+                   if(i != null) i.sendData1(msg);
                 } else if (count == -1 ) {
                     // Если count=-1, то поток прерван
                     System.out.println("1socket is closed");
