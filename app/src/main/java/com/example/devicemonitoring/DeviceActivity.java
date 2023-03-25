@@ -21,6 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 public class DeviceActivity extends AppCompatActivity implements MyCustomInterface{
@@ -29,10 +30,12 @@ public class DeviceActivity extends AppCompatActivity implements MyCustomInterfa
     ToggleButton tb0, tb1, tb2, tb3, tb4, tb5, tb6, tb7, tb8, tb9, tb10, tb11, tb12, tb13, tb14, tb15;
     ToggleButton stb0, stb1, stb2, stb3, stb4, stb5, stb6, stb7, stb8, stb9, stb10, stb11, stb12, stb13, stb14, stb15;
     private Connection  mConnect;
-    String cbHost,cbPort;
+    String cbHost, cbPort;
     DeviceClass [] myDevices = new DeviceClass[5];
-    JSONObject js;
     int devCurr = 1;
+
+    //int backgroundColor = getResources().getColor(R.color.green,  null);
+    //int backgroundColor2 = getResources().getColor(R.color.red,  null);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +52,6 @@ public class DeviceActivity extends AppCompatActivity implements MyCustomInterfa
         ai3 = findViewById(R.id.textViewPar4);
         ai4 = findViewById(R.id.textViewPar5);
         ai5 = findViewById(R.id.textViewPar6);
-
         btnExit = findViewById(R.id.btnExitConnection);
 
         btn1 = findViewById(R.id.buttonDevice1);
@@ -111,15 +113,15 @@ public class DeviceActivity extends AppCompatActivity implements MyCustomInterfa
 
         Resources resources = getResources();
         int backgroundColor = resources.getColor(R.color.green,  null);
+        int backgroundColor2 = resources.getColor(R.color.red,  null);
+
 
         Bundle arguments = getIntent().getExtras();
         if(arguments!=null){
             cbHost = arguments.get("cbHost").toString();
             cbPort = arguments.get("cbPort").toString();
         }
-        MyCustomInterface i = this;
-        Context context = this;
-            mConnect = new Connection(cbHost, Integer.parseInt(cbPort), context, i);
+            mConnect = new Connection(cbHost, Integer.parseInt(cbPort), this);
             // Открытие сокета в отдельном потоке
             new Thread(new Runnable() {
                 @Override
@@ -133,6 +135,9 @@ public class DeviceActivity extends AppCompatActivity implements MyCustomInterfa
                     } catch (Exception e) {
                         Log.e(Connection.LOG_TAG, e.getMessage());
                         mConnect = null;
+                        indicator.setBackgroundColor(backgroundColor2);
+                        Log.d(Connection.LOG_TAG, "1111111111111111111111111Соединение установлено");
+                        tryReConnect();
                     }
                 }
             }).start();
@@ -142,7 +147,13 @@ public class DeviceActivity extends AppCompatActivity implements MyCustomInterfa
             @Override
             public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked)
             {
-                if(isChecked) onSendClick("DO0","1"); else onSendClick("DO0","0");
+                if(isChecked){
+                    onSendClick("DO0","1");
+                    myDevices[devCurr-1].DO0 = "1";
+                }else{
+                    onSendClick("DO0","0");
+                    myDevices[devCurr-1].DO0 = "0";
+                }
             }
         });
         tb1.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
@@ -150,7 +161,13 @@ public class DeviceActivity extends AppCompatActivity implements MyCustomInterfa
             @Override
             public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked)
             {
-                if(isChecked) onSendClick("DO1","1"); else onSendClick("DO1","0");
+                if(isChecked){
+                    onSendClick("DO1","1");
+                    myDevices[devCurr-1].DO1 = "1";
+                }else{
+                    onSendClick("DO1","0");
+                    myDevices[devCurr-1].DO1 = "0";
+                }
             }
         });
         tb2.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
@@ -158,7 +175,13 @@ public class DeviceActivity extends AppCompatActivity implements MyCustomInterfa
             @Override
             public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked)
             {
-                if(isChecked) onSendClick("DO2","1"); else onSendClick("DO2","0");
+                if(isChecked){
+                    onSendClick("DO2","1");
+                    myDevices[devCurr-1].DO2 = "1";
+                }else{
+                    onSendClick("DO2","0");
+                    myDevices[devCurr-1].DO2 = "0";
+                }
             }
         });
         tb3.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
@@ -166,7 +189,13 @@ public class DeviceActivity extends AppCompatActivity implements MyCustomInterfa
             @Override
             public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked)
             {
-                if(isChecked) onSendClick("DO3","1"); else onSendClick("DO3","0");
+                if(isChecked){
+                    onSendClick("DO3","1");
+                    myDevices[devCurr-1].DO3 = "1";
+                }else{
+                    onSendClick("DO3","0");
+                    myDevices[devCurr-1].DO3 = "0";
+                }
             }
         });
         tb4.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
@@ -174,7 +203,13 @@ public class DeviceActivity extends AppCompatActivity implements MyCustomInterfa
             @Override
             public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked)
             {
-                if(isChecked) onSendClick("DO4","1"); else onSendClick("DO4","0");
+                if(isChecked){
+                    onSendClick("DO4","1");
+                    myDevices[devCurr-1].DO4 = "1";
+                }else{
+                    onSendClick("DO4","0");
+                    myDevices[devCurr-1].DO4 = "0";
+                }
             }
         });
         tb5.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
@@ -182,7 +217,13 @@ public class DeviceActivity extends AppCompatActivity implements MyCustomInterfa
             @Override
             public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked)
             {
-                if(isChecked) onSendClick("DO5","1"); else onSendClick("DO5","0");
+                if(isChecked){
+                    onSendClick("DO5","1");
+                    myDevices[devCurr-1].DO5 = "1";
+                }else{
+                    onSendClick("DO5","0");
+                    myDevices[devCurr-1].DO5 = "0";
+                }
             }
         });
         tb6.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
@@ -190,7 +231,13 @@ public class DeviceActivity extends AppCompatActivity implements MyCustomInterfa
             @Override
             public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked)
             {
-                if(isChecked) onSendClick("DO6","1"); else onSendClick("DO6","0");
+                if(isChecked){
+                    onSendClick("DO6","1");
+                    myDevices[devCurr-1].DO6 = "1";
+                }else{
+                    onSendClick("DO6","0");
+                    myDevices[devCurr-1].DO6 = "0";
+                }
             }
         });
         tb7.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
@@ -198,7 +245,13 @@ public class DeviceActivity extends AppCompatActivity implements MyCustomInterfa
             @Override
             public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked)
             {
-                if(isChecked) onSendClick("DO7","1"); else onSendClick("DO7","0");
+                if(isChecked){
+                    onSendClick("DO7","1");
+                    myDevices[devCurr-1].DO7 = "1";
+                }else{
+                    onSendClick("DO7","0");
+                    myDevices[devCurr-1].DO7 = "0";
+                }
             }
         });
         tb8.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
@@ -206,7 +259,13 @@ public class DeviceActivity extends AppCompatActivity implements MyCustomInterfa
             @Override
             public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked)
             {
-                if(isChecked) onSendClick("DO8","1"); else onSendClick("DO8","0");
+                if(isChecked){
+                    onSendClick("DO8","1");
+                    myDevices[devCurr-1].DO8 = "1";
+                }else{
+                    onSendClick("DO8","0");
+                    myDevices[devCurr-1].DO8 = "0";
+                }
             }
         });
         tb9.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
@@ -214,7 +273,13 @@ public class DeviceActivity extends AppCompatActivity implements MyCustomInterfa
             @Override
             public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked)
             {
-                if(isChecked) onSendClick("DO9","1"); else onSendClick("DO9","0");
+                if(isChecked){
+                    onSendClick("DO9","1");
+                    myDevices[devCurr-1].DO9 = "1";
+                }else{
+                    onSendClick("DO9","0");
+                    myDevices[devCurr-1].DO9 = "0";
+                }
             }
         });
         tb10.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
@@ -222,7 +287,13 @@ public class DeviceActivity extends AppCompatActivity implements MyCustomInterfa
             @Override
             public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked)
             {
-                if(isChecked) onSendClick("DO10","1"); else onSendClick("DO10","0");
+                if(isChecked){
+                    onSendClick("DO10","1");
+                    myDevices[devCurr-1].DO10 = "1";
+                }else{
+                    onSendClick("DO10","0");
+                    myDevices[devCurr-1].DO10 = "0";
+                }
             }
         });
         tb11.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
@@ -230,7 +301,13 @@ public class DeviceActivity extends AppCompatActivity implements MyCustomInterfa
             @Override
             public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked)
             {
-                if(isChecked) onSendClick("DO11","1"); else onSendClick("DO11","0");
+                if(isChecked){
+                    onSendClick("DO11","1");
+                    myDevices[devCurr-1].DO11 = "1";
+                }else{
+                    onSendClick("DO11","0");
+                    myDevices[devCurr-1].DO11 = "0";
+                }
             }
         });
         tb12.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
@@ -238,7 +315,13 @@ public class DeviceActivity extends AppCompatActivity implements MyCustomInterfa
             @Override
             public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked)
             {
-                if(isChecked) onSendClick("DO12","1"); else onSendClick("DO12","0");
+                if(isChecked){
+                    onSendClick("DO12","1");
+                    myDevices[devCurr-1].DO12 = "1";
+                }else{
+                    onSendClick("DO12","0");
+                    myDevices[devCurr-1].DO12 = "0";
+                }
             }
         });
         tb13.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
@@ -246,7 +329,13 @@ public class DeviceActivity extends AppCompatActivity implements MyCustomInterfa
             @Override
             public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked)
             {
-                if(isChecked) onSendClick("DO13","1"); else onSendClick("DO13","0");
+                if(isChecked){
+                    onSendClick("DO13","1");
+                    myDevices[devCurr-1].DO13 = "1";
+                }else{
+                    onSendClick("DO13","0");
+                    myDevices[devCurr-1].DO13 = "0";
+                }
             }
         });
         tb14.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
@@ -254,7 +343,13 @@ public class DeviceActivity extends AppCompatActivity implements MyCustomInterfa
             @Override
             public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked)
             {
-                if(isChecked) onSendClick("DO14","1"); else onSendClick("DO14","0");
+                if(isChecked){
+                onSendClick("DO14","1");
+                myDevices[devCurr-1].DO14 = "1";
+            }else{
+                onSendClick("DO14","0");
+                myDevices[devCurr-1].DO14 = "0";
+            }
             }
         });
         tb15.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
@@ -262,13 +357,20 @@ public class DeviceActivity extends AppCompatActivity implements MyCustomInterfa
             @Override
             public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked)
             {
-                if(isChecked) onSendClick("DO15","1"); else onSendClick("DO15","0");
+                if(isChecked){
+                    onSendClick("DO15","1");
+                    myDevices[devCurr-1].DO15 = "1";
+                }else{
+                    onSendClick("DO15","0");
+                    myDevices[devCurr-1].DO15 = "0";
+                }
             }
         });
 
         btnExit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
                 onCloseClick();
+                indicator.setBackgroundColor(backgroundColor);
             }
         });
         btn1.setOnClickListener(new View.OnClickListener() {
@@ -301,8 +403,6 @@ public class DeviceActivity extends AppCompatActivity implements MyCustomInterfa
                 setDevData(5);
             }
         });
-
-
     }
 
     private void onCloseClick()
@@ -315,10 +415,12 @@ public class DeviceActivity extends AppCompatActivity implements MyCustomInterfa
     }
     private void onSendClick(String text1, String text2)
     {
-        String strN;
+        Resources resources = getResources();
+        int backgroundColor2 = resources.getColor(R.color.red,  null);
         if (mConnect == null) {
-            //indicator.setBackgroundColor(backgroundColor2);
+            indicator.setBackgroundColor(backgroundColor2);
             Log.d(Connection.LOG_TAG, "Соединение не установлено");
+            tryReConnect();
         }  else {
             Log.d(Connection.LOG_TAG, "Отправка сообщения");
             new Thread(new Runnable() {
@@ -337,6 +439,8 @@ public class DeviceActivity extends AppCompatActivity implements MyCustomInterfa
                         /* отправляем на сервер данные */
                         mConnect.sendData(jo.toString().getBytes());
                     } catch (Exception e) {
+                        indicator.setBackgroundColor(backgroundColor2);
+                        tryReConnect();
                         Log.e(Connection.LOG_TAG, e.getMessage());
                     }
                 }
@@ -345,7 +449,7 @@ public class DeviceActivity extends AppCompatActivity implements MyCustomInterfa
     }
 
    @Override
-    public void sendData1(String str) {
+    public void recvData(String str) {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
             @Override
@@ -358,11 +462,9 @@ public class DeviceActivity extends AppCompatActivity implements MyCustomInterfa
             }
         });
     }
-
-
     public void setDevData(int numDev){
         int n = numDev-1;
-        name.setText(myDevices[n].getDevice());
+        name.setText(myDevices[n].getName());
         ready.setText(myDevices[n].getStatus());
         ai0.setText(myDevices[n].getAI0());
         ai1.setText(myDevices[n].getAI1());
@@ -478,5 +580,32 @@ public class DeviceActivity extends AppCompatActivity implements MyCustomInterfa
             myDevices[num].AI5 = urls.getJSONObject(i).getString("AI5").toString();
         }
         setDevData(devCurr);
+    }
+    private void tryReConnect(){
+        Resources resources = getResources();
+        int backgroundColor = resources.getColor(R.color.green,  null);
+        int backgroundColor2 = resources.getColor(R.color.red,  null);
+        indicator.setBackgroundColor(backgroundColor2);
+        mConnect.closeConnection();
+        mConnect = new Connection(cbHost, Integer.parseInt(cbPort), this);
+        // Открытие сокета в отдельном потоке
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    mConnect.openConnection();
+                    indicator.setBackgroundColor(backgroundColor);
+                    mConnect.run();
+                    Log.d(Connection.LOG_TAG, "Соединение установлено");
+                    //indicator.setBackgroundColor(backgroundColor);
+
+                } catch (Exception e) {
+                    Log.e(Connection.LOG_TAG, e.getMessage());
+                    mConnect = null;
+                    Log.d(Connection.LOG_TAG, "1111111111111111111111111Соединение установлено");
+                    tryReConnect();
+                }
+            }
+        }).start();
     }
 }

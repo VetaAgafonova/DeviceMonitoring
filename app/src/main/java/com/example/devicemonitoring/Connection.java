@@ -25,7 +25,7 @@ public class Connection implements Runnable
     private InputStream inputStream = null;
 
     public static final String LOG_TAG = "SOCKET";
-    Context mContext = null;
+    //Context mContext = null;
     private MyCustomInterface i = null;
 
 
@@ -35,11 +35,11 @@ public class Connection implements Runnable
         this.i = i;
     }
 
-    public Connection (final String host, final int port, Context context, MyCustomInterface a)
+    public Connection (final String host, final int port, MyCustomInterface a)
     {
         this.mHost = host;
         this.mPort = port;
-        this.mContext = context;
+        //this.mContext = context;
         this.i = a;
 
 
@@ -98,6 +98,7 @@ public class Connection implements Runnable
         closeConnection();
     }
 
+
     @Override
     public void run() {
         try {
@@ -119,9 +120,9 @@ public class Connection implements Runnable
 
                 if (count > 0) {
                     String msg = new String(data, 0, count);
-                    JSONObject js = new JSONObject(msg);
+                    //JSONObject js = new JSONObject(msg);
                     System.out.println(msg);
-                   if(i != null) i.sendData1(msg);
+                   if(i != null) i.recvData(msg);
                 } else if (count == -1 ) {
                     // Если count=-1, то поток прерван
                     System.out.println("1socket is closed");
@@ -130,8 +131,6 @@ public class Connection implements Runnable
                 }
             } catch (IOException e) {
                 System.err.println(e.getMessage());
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
             }
         }
         System.out.println("1ConnectionWorker stoped");
