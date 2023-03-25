@@ -26,7 +26,7 @@ import java.io.InputStream;
 
 public class DeviceActivity extends AppCompatActivity implements MyCustomInterface{
     TextView indicator, name, ready, ai0, ai1, ai2, ai3, ai4, ai5;
-    Button btnExit, btn1, btn2, btn3, btn4, btn5;
+    Button btnExit1, btn1, btn2, btn3, btn4, btn5;
     ToggleButton tb0, tb1, tb2, tb3, tb4, tb5, tb6, tb7, tb8, tb9, tb10, tb11, tb12, tb13, tb14, tb15;
     ToggleButton stb0, stb1, stb2, stb3, stb4, stb5, stb6, stb7, stb8, stb9, stb10, stb11, stb12, stb13, stb14, stb15;
     private Connection  mConnect;
@@ -52,7 +52,7 @@ public class DeviceActivity extends AppCompatActivity implements MyCustomInterfa
         ai3 = findViewById(R.id.textViewPar4);
         ai4 = findViewById(R.id.textViewPar5);
         ai5 = findViewById(R.id.textViewPar6);
-        btnExit = findViewById(R.id.btnExitConnection);
+        btnExit1 = findViewById(R.id.btnExitConnection);
 
         btn1 = findViewById(R.id.buttonDevice1);
         btn2 = findViewById(R.id.buttonDevice2);
@@ -367,7 +367,7 @@ public class DeviceActivity extends AppCompatActivity implements MyCustomInterfa
             }
         });
 
-        btnExit.setOnClickListener(new View.OnClickListener() {
+        btnExit1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
                 onCloseClick();
                 indicator.setBackgroundColor(backgroundColor);
